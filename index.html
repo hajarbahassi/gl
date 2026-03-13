@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Zoom Optique | Hamza Bahassi</title>
+    
+    <!-- POLICES ATTRACTIVES -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --vert-medical: #004d40;
+            --blanc: #ffffff;
+            --anthracite: #263238;
+            --gris-fond: #f4f7f6;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; color: var(--anthracite); background-color: var(--blanc); line-height: 1.6; overflow-x: hidden; }
+
+        h1, h2, .logo { font-family: 'Playfair Display', serif; }
+        h3, h4, .nav-links a, .btn-main { font-family: 'Montserrat', sans-serif; }
+
+        /* BANDEAU LIVRAISON */
+        .delivery-bar {
+            background: var(--vert-medical);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            z-index: 1100;
+            position: relative;
+        }
+
+        /* NAVIGATION STICKY */
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: transparent;
+            transition: var(--transition);
+        }
+
+        header.scrolled nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 12px 5%;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            color: var(--vert-medical);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--anthracite);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+        .nav-links a:hover { color: var(--vert-medical); }
+
+        /* HERO (clario-20.png.jpeg) */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0, 77, 64, 0.7), rgba(0, 77, 64, 0.5)), url('clario-20.png.jpeg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 10px; }
+        .hero-content p { font-size: 1.4rem; font-weight: 300; margin-bottom: 35px; letter-spacing: 2px; }
+
+        .btn-main {
+            background: var(--vert-medical);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 2px solid var(--vert-medical);
+            display: inline-block;
+        }
+        .btn-main:hover { background: transparent; border-color: white; transform: scale(1.05); }
+
+        /* SECTION PRIORITÉ (clario-8.png.jpeg) */
+        .section-padding { padding: 100px 5%; }
+        .flex-container { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .flex-text { flex: 1; min-width: 300px; }
+        .flex-img { flex: 1; min-width: 300px; }
+        .flex-img img { width: 100%; border-radius: 20px; box-shadow: 20px 20px 0 var(--vert-medical); }
+
+        .section-title { font-size: 2.8rem; color: var(--vert-medical); margin-bottom: 25px; line-height: 1.2; }
+        .section-text { font-size: 1.1rem; color: #555; margin-bottom: 20px; }
+
+        /* SERVICES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        .service-card {
+            background: var(--gris-fond);
+            padding: 45px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+        }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--vert-medical); background: white; box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
+        .service-card i { font-size: 3rem; color: var(--vert-medical); margin-bottom: 20px; }
+        .service-card h3 { margin-bottom: 15px; font-size: 1.2rem; }
+
+        /* SLIDER CATALOGUE INFINI (clario-1 à 7) */
+        .slider-container { width: 100%; overflow: hidden; background: white; padding: 60px 0; }
+        .slider-track { display: flex; width: calc(300px * 14); animation: scroll-loop 30s linear infinite; }
+        .slider-track img { width: 300px; height: 200px; object-fit: contain; padding: 0 40px; }
+
+        @keyframes scroll-loop { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-300px * 7)); } }
+
+        /* SECTION EXPERT (clario-19.png.jpeg) */
+        .expert-section { background: var(--gris-fond); border-radius: 50px 50px 0 0; }
+        .expert-flex { display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
+        .expert-img { flex: 1; position: relative; }
+        .expert-img img.main-exp { width: 100%; border-radius: 30px; }
+        .mini-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+        .mini-gallery img { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; }
+
+        /* GRILLE ÉQUIPEMENTS (clario-9 à 12) */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item { overflow: hidden; border-radius: 15px; height: 350px; position: relative; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s ease; }
+        .gallery-item:hover img { transform: scale(1.15); }
+
+        /* FORMULAIRE RDV */
+        .rdv-container { max-width: 900px; margin: 0 auto; background: white; padding: 50px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.05); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: span 2; }
+        input, select { width: 100%; padding: 15px; border: 1.5px solid #eee; border-radius: 10px; font-family: 'Poppins'; background: #fafafa; }
+        input:focus { outline: none; border-color: var(--vert-medical); }
+
+        /* FOOTER */
+        footer { background: var(--anthracite); color: white; padding: 80px 5% 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 50px; }
+        .footer-col h4 { margin-bottom: 25px; color: var(--blanc); font-size: 1.1rem; border-left: 3px solid var(--vert-medical); padding-left: 10px; }
+        .footer-col p, .footer-col a { color: #bbb; text-decoration: none; font-size: 0.9rem; margin-bottom: 12px; display: block; }
+        .footer-col a:hover { color: white; }
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a { font-size: 1.5rem; color: white; }
+
+        /* CHATBOT INTELLIGENT */
+        .chat-container { position: fixed; bottom: 30px; left: 30px; z-index: 2000; }
+        .chat-bubble { width: 65px; height: 65px; background: var(--vert-medical); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s; }
+        .chat-bubble:hover { transform: scale(1.1); }
+        .chat-window { position: absolute; bottom: 80px; left: 0; width: 350px; background: white; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.15); display: none; flex-direction: column; overflow: hidden; border: 1px solid #eee; }
+        .chat-window.active { display: flex; animation: fadeInUp 0.4s ease; }
+        .chat-header { background: var(--vert-medical); color: white; padding: 20px; font-weight: 700; display: flex; justify-content: space-between; }
+        .chat-body { padding: 20px; max-height: 400px; overflow-y: auto; }
+        .chat-q { background: #f0f4f3; padding: 12px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.3s; border-left: 3px solid var(--vert-medical); }
+        .chat-q:hover { background: #e2ebe9; }
+        #chat-res { margin-top: 15px; padding: 15px; background: var(--gris-fond); border-radius: 10px; font-size: 0.85rem; display: none; border-left: 3px solid var(--vert-medical); line-height: 1.5; }
+
+        /* WHATSAPP PULSE */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; z-index: 2000; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: pulse-green 2s infinite; }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .form-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+            .chat-window { width: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="delivery-bar">🚚 Livraison gratuite partout au Maroc</div>
+
+    <header id="main-header">
+        <nav>
+            <a href="#" class="logo">Mega Zoom Optique</a>
+            <div class="nav-links">
+                <a href="#home">Accueil</a>
+                <a href="#priorite">Engagement</a>
+                <a href="#catalogue">Collection</a>
+                <a href="#expert">L'Expert</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO avec clario-20.png.jpeg -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Mega Zoom Optique</h1>
+            <p>Votre Vision, Notre Engagement</p>
+            <a href="#rdv" class="btn-main">Prendre Rendez-vous</a>
+        </div>
+    </section>
+
+    <!-- SECTION SANTÉ avec clario-8.png.jpeg -->
+    <section class="section-padding" id="priorite">
+        <div class="flex-container">
+            <div class="flex-text">
+                <h2 class="section-title">Votre Santé Visuelle,<br>Notre Seule Priorité</h2>
+                <p class="section-text">Notre mission est simple : garantir une précision optique absolue et un confort visuel optimal pour chaque patient.</p>
+                <p class="section-text">Chaque prise de mesure et chaque montage de verres sont réalisés avec une rigueur chirurgicale, s'appuyant sur l'expertise d'un opticien diplômé et des équipements de diagnostic de haute technologie.</p>
+            </div>
+            <div class="flex-img">
+                <img src="clario-8.png.jpeg" alt="Engagement Santé">
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section-padding" style="background: var(--gris-fond);">
+        <h2 class="section-title" style="text-align: center;">Accompagnement 360°</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-eye"></i>
+                <h3>Examen de la Vue</h3>
+                <p>Mesure précise avec réfractomètre automatique.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-microscope"></i>
+                <h3>Contactologie</h3>
+                <p>Adaptation de lentilles souples et rigides.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-glasses"></i>
+                <h3>Conseil & Visagisme</h3>
+                <p>Choix de montures selon votre morphologie.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-tools"></i>
+                <h3>Montage & Réparation</h3>
+                <p>Atelier technique sur place.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDER CATALOGUE INFINI (clario-1.png.png à clario-7.png.png) -->
+    <div id="catalogue" class="slider-container">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 40px;">Collection Solaire Exclusive</h2>
+        <div class="slider-track">
+            <img src="clario-1.png.png" alt="Solaire 1">
+            <img src="clario-2.png.png" alt="Solaire 2">
+            <img src="clario-3.png.png" alt="Solaire 3">
+            <img src="clario-4.png.png" alt="Solaire 4">
+            <img src="clario-5.png.png" alt="Solaire 5">
+            <img src="clario-6.png.png" alt="Solaire 6">
+            <img src="clario-7.png.png" alt="Solaire 7">
+            <!-- Doublons pour l'effet infini -->
+            <img src="clario-1.png.png" alt="Solaire 1">
+            <img src="clario-2.png.png" alt="Solaire 2">
+            <img src="clario-3.png.png" alt="Solaire 3">
+            <img src="clario-4.png.png" alt="Solaire 4">
+            <img src="clario-5.png.png" alt="Solaire 5">
+            <img src="clario-6.png.png" alt="Solaire 6">
+            <img src="clario-7.png.png" alt="Solaire 7">
+        </div>
+    </div>
+
+    <!-- SECTION EXPERT (clario-19.png.jpeg + miniatures) -->
+    <section class="section-padding expert-section" id="expert">
+        <div class="flex-container">
+            <div class="flex-img">
+                <img src="clario-19.png.jpeg" alt="Hamza Bahassi" style="width:100%; border-radius:30px;">
+                <div class="mini-gallery">
+                    <img src="clario-13.png.jpeg" alt="Machine 1">
+                    <img src="clario-14.png.jpeg" alt="Machine 2">
+                    <img src="clario-15.png.jpeg" alt="Machine 3">
+                    <img src="clario-16.png.jpeg" alt="Machine 4">
+                    <img src="clario-17.png.jpeg" alt="Machine 5">
+                    <img src="clario-18.png.jpeg" alt="Machine 6">
+                </div>
+            </div>
+            <div class="flex-text">
+                <h4 style="color: var(--vert-medical); text-transform: uppercase;">À Votre Service</h4>
+                <h2 class="section-title">Un Expert Visionnaire à votre Écoute</h2>
+                <p class="section-text">Notre établissement est dirigé par <strong>M. Hamza Bahassi</strong>, opticien diplômé de l'école IPIAB (Promotion 2021). Passionné par l'optométrie, il met son expertise et sa rigueur au service de votre santé visuelle. Le cabinet dispose d'un plateau technique complet pour une précision absolue.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION ÉQUIPEMENTS (clario-9 à 12) -->
+    <section class="section-padding">
+        <h2 class="section-title" style="text-align:center;">Précision et Innovation</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="clario-9.png.jpeg" alt="Equipement 1"></div>
+            <div class="gallery-item"><img src="clario-10.png.jpeg" alt="Equipement 2"></div>
+            <div class="gallery-item"><img src="clario-11.png.jpeg" alt="Equipement 3"></div>
+            <div class="gallery-item"><img src="clario-12.png.jpeg" alt="Equipement 4"></div>
+        </div>
+    </section>
+
+    <!-- FORMULAIRE RDV -->
+    <section id="rdv" class="section-padding" style="background: var(--gris-fond);">
+        <div class="rdv-container">
+            <h2 class="section-title" style="text-align: center;">Prendre Rendez-vous</h2>
+            <form id="rdvForm">
+                <div class="form-grid">
+                    <input type="text" id="nom" placeholder="Nom" required>
+                    <input type="text" id="prenom" placeholder="Prénom" required>
+                    <input type="tel" id="tel" placeholder="Téléphone" required>
+                    <select id="motif" required>
+                        <option value="">Motif de consultation</option>
+                        <option>Examen de la vue</option>
+                        <option>Conseil lunettes</option>
+                        <option>Adaptation lentilles</option>
+                        <option>Réparation / Ajustement</option>
+                    </select>
+                    <input type="date" id="date" class="full-width" required>
+                    <button type="submit" class="btn-main full-width">Envoyer ma demande</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="#" class="logo" style="color: white;">Mega Zoom</a>
+                <p style="margin-top:20px;">Votre opticien de confiance à Rabat pour une vision parfaite.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Bloc 8 N°15 Bis Youssoufia, Rabat (à côté d'OLIBIA & café DALILA)</p>
+                <p><i class="fas fa-phone"></i> 07 52 93 41 07</p>
+                <p><i class="fas fa-envelope"></i> bahassih@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Horaires</h4>
+                <p>Lun - Sam : 09:30 - 20:00</p>
+                <p>Dimanche : Fermé</p>
+            </div>
+            <div class="footer-col">
+                <h4>Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com/mega.zoom_off" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <p style="text-align:center; padding-top:30px; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 Mega Zoom Optique. Expertise signée Hamza Bahassi. Tous droits réservés.</p>
+    </footer>
+
+    <!-- BOUTON WHATSAPP PULSE -->
+    <a href="https://wa.me/212752934107?text=Bonjour%20Mega%20Zoom%20Optique%2C%20j%27aimerais%20avoir%20plus%20d%27informations" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- CHATBOT -->
+    <div class="chat-container">
+        <div class="chat-bubble" id="chat-toggle"><i class="fas fa-comment-medical"></i></div>
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <span>Assistant Mega Zoom</span>
+                <i class="fas fa-times" id="chat-close" style="cursor:pointer;"></i>
+            </div>
+            <div class="chat-body">
+                <div class="chat-q" onclick="getAns(1)">👓 Comment bien choisir mes lunettes ?</div>
+                <div class="chat-q" onclick="getAns(2)">💧 J'ai les yeux secs et irrités, que faire ?</div>
+                <div class="chat-q" onclick="getAns(3)">🕒 Fatigue visuelle sur écran, solutions ?</div>
+                <div class="chat-q" onclick="getAns(4)">🧼 Comment nettoyer mes verres sans les rayer ?</div>
+                <div id="chat-res"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Navigation Sticky
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // 2. Chatbot Logic
+        const chatWindow = document.getElementById('chat-window');
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatClose = document.getElementById('chat-close');
+        const chatRes = document.getElementById('chat-res');
+
+        chatToggle.onclick = () => chatWindow.classList.toggle('active');
+        chatClose.onclick = () => chatWindow.classList.remove('active');
+
+        function getAns(id) {
+            const responses = {
+                1: "<strong>Comment choisir ses lunettes :</strong><br>• Visage ROND → montures angulaires/rectangulaires.<br>• Visage CARRÉ → montures rondes/ovales.<br>• Visage OVALE → toutes les formes vous conviennent !<br>• Visage EN CŒUR → montures sans bord inférieur.<br>• Visage ALLONGÉ → montures hautes et larges.<br><br>Notre expert Hamza Bahassi vous conseille gratuitement en magasin pour trouver la monture parfaite !",
+                2: "<strong>Conseils pour les yeux secs :</strong><br>1. UTILISEZ des larmes artificielles sans conservateurs.<br>2. APPLIQUEZ la règle du 20-20-20.<br>3. CLIGNEZ des yeux consciemment sur écran.<br>4. ÉVITEZ la climatisation directe.<br>5. HYDRATEZ-VOUS suffisamment.<br>6. CONSULTEZ un spécialiste si persistant.",
+                3: "<strong>Solutions fatigue visuelle :</strong><br>✓ RÈGLE 20-20-20 : pause 20s toutes les 20min.<br>✓ AJUSTEZ la luminosité de vos écrans.<br>✓ ÉVITEZ les reflets.<br>✓ PENSEZ aux verres anti-lumière bleue.<br>✓ FAITES des vraies pauses de 5-10 minutes.",
+                4: "<strong>Nettoyage professionnel :</strong><br>❌ À ÉVITER : papier toilette, vêtements, nettoyage à sec, eau chaude.<br><br>✅ LA MÉTHODE :<br>1. RINCEZ à l'eau tiède.<br>2. APPLIQUEZ une goutte de savon doux.<br>3. FROTTEZ délicatement avec les doigts.<br>4. RINCEZ abondamment.<br>5. SÉCHEZ avec un chiffon microfibre propre.<br><br>Nous offrons un nettoyage gratuit aux ultrasons en magasin !"
+            };
+            chatRes.innerHTML = responses[id];
+            chatRes.style.display = 'block';
+        }
+
+        // 3. Form Submission with personalized alert
+        document.getElementById('rdvForm').onsubmit = (e) => {
+            e.preventDefault();
+            const prenom = document.getElementById('prenom').value;
+            alert(`✅ Merci ${prenom}, nous avons bien reçu votre demande. Nous vous contacterons très prochainement !`);
+            e.target.reset();
+        };
+    </script>
+</body>
+</html>
